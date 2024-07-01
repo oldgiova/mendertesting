@@ -32,7 +32,7 @@ test:static:
   needs: []
   except:
     - /^saas-[a-zA-Z0-9.]+$/
-  image: "golangci/golangci-lint:${IMAGE_GOLANGCI_VERSION}"
+  image: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/golangci/golangci-lint:${IMAGE_GOLANGCI_VERSION}"
   before_script:
     # Install compile dependencies
     - if [ -f deb-requirements.txt ]; then
@@ -59,7 +59,7 @@ test:govendor-check:
       - vendor
   variables:
     GOLANG_VERSION: "1.21.3"
-  image: golang:${GOLANG_VERSION}
+  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/golang:${GOLANG_VERSION}
   script:
     - go mod tidy
     - go mod vendor

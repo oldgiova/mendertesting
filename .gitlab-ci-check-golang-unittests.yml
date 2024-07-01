@@ -41,7 +41,7 @@ test:unit:
   needs: []
   except:
     - /^saas-[a-zA-Z0-9.]+$/
-  image: golang:1.20.4
+  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/golang:1.20.4
   services:
     - mongo:6.0
   variables:
@@ -100,7 +100,7 @@ publish:unittests:
   stage: publish
   except:
     - /^saas-[a-zA-Z0-9.]+$/
-  image: golang:1.20-alpine3.17
+  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/golang:1.20-alpine3.17
   dependencies:
     - test:unit
   before_script:
@@ -138,7 +138,7 @@ coveralls:finish-build:
   variables:
     COVERALLS_WEBHOOK_URL: "https://coveralls.io/webhook"
     COVERALLS_RERUN_BUILD_URL: "https://coveralls.io/rerun_build"
-  image: curlimages/curl-base
+  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/curlimages/curl-base
   script:
     - 'curl -k ${COVERALLS_WEBHOOK_URL}?repo_token=${COVERALLS_TOKEN} -d "payload[build_num]=$CI_PIPELINE_ID&payload[status]=done"'
     - 'curl -k "${COVERALLS_RERUN_BUILD_URL}?repo_token=${COVERALLS_TOKEN}&build_num=${CI_PIPELINE_ID}"'

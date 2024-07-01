@@ -27,7 +27,7 @@ test:apidocs:verify-yaml:
   needs: []
   except:
     - /^saas-[a-zA-Z0-9.]+$/
-  image: python:3-alpine
+  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/python:3-alpine
   before_script:
     # Get our own Swagger verifier
     - pip3 install pyyaml
@@ -43,7 +43,7 @@ test:apidocs:verify-swagger:
   needs: []
   except:
     - /^saas-[a-zA-Z0-9.]+$/
-  image: node:alpine
+  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/node:alpine
   script:
     # Verify that the Swagger docs are valid
     - npm i -g @apidevtools/swagger-cli
@@ -55,7 +55,7 @@ test:validate-open-api:
   stage: test
   needs: []
   image:
-    name: alpine
+    name: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/alpine
   before_script:
     - apk --update add curl
     - curl -L https://raw.github.com/stoplightio/spectral/master/scripts/install.sh -o install.sh
@@ -87,7 +87,7 @@ trigger:apidocs:rebuild-mender-api-docs:
       - docs/*
       if: '$CI_COMMIT_BRANCH =~ /^(master|staging|[0-9]+\.[0-9]+\.x)$/'
     - if: '$REBUILD_MENDER_API_DOCS == "true"'
-  image: alpine
+  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/alpine
   before_script:
     - apk add git python3 py3-pip
     - wget https://raw.githubusercontent.com/mendersoftware/integration/master/extra/requirements.txt

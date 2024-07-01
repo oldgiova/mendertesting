@@ -57,7 +57,7 @@ sync:image:
   dependencies:
     - publish:image
   stage: sync
-  image: debian:buster
+  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/debian:buster
   before_script:
     - apt update && apt install -yyq git
     # Prepare SSH key

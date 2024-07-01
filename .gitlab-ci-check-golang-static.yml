@@ -27,7 +27,7 @@ test:static:
   needs: []
   except:
     - /^saas-[a-zA-Z0-9.]+$/
-  image: golang:1.20
+  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/golang:1.20
   before_script:
     # Install cyclomatic dependency analysis tool
     - GO111MODULE=off go get -u github.com/fzipp/gocyclo/...
@@ -60,7 +60,7 @@ test:govendor-check:
       - vendor
   variables:
     GOLANG_VERSION: "1.20"
-  image: golang:${GOLANG_VERSION}
+  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/golang:${GOLANG_VERSION}
   script:
     - go mod tidy
     - go mod vendor
